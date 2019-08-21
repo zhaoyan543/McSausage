@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Smart Monitoring Application</title>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+  <!-- Bootstrap core CSS -->
+  <link href="../static/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Material Design Bootstrap -->
+  <link href="../static/css/mdb.min.css" rel="stylesheet">
+  <!-- Your custom styles (optional) -->
+  <link href="../static/css/style.min.css" rel="stylesheet">
+  <style>
+    .map-container {
+      overflow: hidden;
+      padding-bottom: 56.25%;
+      position: relative;
+      height: 0;
+    }
+
+    .map-container iframe {
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 100%;
+      position: absolute;
+    }
+  </style>
+
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.js"></script>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script type="text/javascript">
+    google.charts.load('current', { 'packages': ['corechart', 'table'] });
+    // Set a callback to run when the Google Visualization API is loaded.
+    google.charts.setOnLoadCallback(googlecharts_is_ready);
+
+    var chart;
+    var graphdata;
+
+    function reset_status_messages() {
+      $("#status").html("")
+    }
+
+    function googlecharts_is_ready() {
+      // $("#buttonloadchart").show()
+      // $("#buttonloadchart").click()
+      $("#status").html("Google charts is ready")
+    }
+
+    function getNewData_loadChart() {
+      $("#status").html("Fetching data...");
+
+      jQuery.ajax({
+        url: "/api/getdata",
+        type: 'POST',
+        success: function (ndata, textStatus, xhr) {
+          console.log(ndata.chart_data.data)
+          $("#status").html("Data fetched! Now plotting graph!");
+          chartdata = ndata.chart_data.data
+          // temperature chart
+          temperatureData = createTemperatureDataTable(chartdata)
+          drawTemperatureChart(temperatureData)
+
+          // humidity chart
+          humidityData = createHumidityDataTable(chartdata)
+          drawHumidityChart(humidityData)
+
+          // temperature & humidity table
+          graphdata = createDataTable(chartdata)
+          drawDataTable(graphdata)
+
+          $("#status").html("Graph plotted");
+        }//end success
+      });//end ajax
+    } //end getNewData
+
+    // data for creating table
+    function createDataTable(newdata) {
+      graphdata = new google.visualization.DataTable();
+      graphdata.addColumn('string', 'Datetime');
+      graphdata.addColumn('number', 'Temperature');
+      graphdata.addColumn('number', 'Humidity');
+      for (i in newdata) {
+        console.log()
+        datetime = newdata[i].datetime;
+        jsdatetime = new Date(Date.parse(datetime));
+        jsdatetime2 = jsdatetime.toLocaleString();
+        temp = newdata[i].temp;
+        hum = newdata[i].humidity;
+        graphdata.addRows([[jsdatetime2, temp, hum]]);
+      }//end for
+      return graphdata
+    }
+
+    // data for plotting temperature chart
+    function createTemperatureDataTable(newdata) {
+      graphdata = new google.visualization.DataTable();
+      graphdata.addColumn('string', 'Time');
+      graphdata.addColumn('number', 'Temperature');
+      for (i in newdata) {
+        console.log()
+        datetime = newdata[i].datetime;
+        jsdatetime = new Date(Date.parse(datetime));
+        jstime = jsdatetime.toLocaleTimeString();
+        temp = newdata[i].temp
+        graphdata.addRows([[jstime, temp]]);
+      }//end for
+      return graphdata
+    }
+
+    // data for plotting humidity chart
+    function createHumidityDataTable(newdata) {
+      graphdata = new google.visualization.DataTable();
+      graphdata.addColumn('string', 'Time');
+      graphdata.addColumn('number', 'Humidity');
+      for (i in newdata) {
+        console.log()
+        datetime = newdata[i].datetime;
+        jsdatetime = new Date(Date.parse(datetime));
+        jstime = jsdatetime.toLocaleTimeString();
+        hum = newdata[i].humidity;
+        graphdata.addRows([[jstime, hum]]);
+      }//end for
+      return graphdata
+    }
+
+    function drawDataTable(graphdata) {
+      var table = new google.visualization.Table(document.getElementById('table_div'));
+      table.draw(graphdata, { showRowNumber: true, width: '100%', height: '100%' });
+
+    }//end drawTable
+
+    function drawTemperatureChart(graphdata) {
+      chart = new google.visualization.LineChart(
+        document.getElementById('temperature_div'));
+      chart.draw(graphdata, {
+        legend: 'none', vAxis: { baseline: 0 },
+        colors: ['#A0D100']
+      });
+      return
+    } //end drawChart
+
+    function drawHumidityChart(graphdata) {
+      chart = new google.visualization.LineChart(
+        document.getElementById('humidity_div'));
+      chart.draw(graphdata, {
+        legend: 'none', vAxis: { baseline: 0 },
+        colors: ['#A0D100']
+      });
+      return
+    } //end drawChart
+
+    $(document).ready(function () {
+      reset_status_messages()
+
+      var today = new Date();
+      var dd = String(today.getDate()).padStart(2, '0');
+      var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+      var yyyy = today.getFullYear();
+
+      var weekday = new Array(7);
+      weekday[0] = "Sun";
+      weekday[1] = "Mon";
+      weekday[2] = "Tue";
+      weekday[3] = "Wed";
+      weekday[4] = "Thu";
+      weekday[5] = "Fri";
+      weekday[6] = "Sat";
+
+      var dayOfWeek = weekday[today.getDay()];
+
+      today = mm + '/' + dd + '/' + yyyy;
+      $("#today_date").html(today + " (" + dayOfWeek + ")");
+    });
+
+  </script>
+
+  <script>
+    function getURL() {
+      var pathname = window.location.hostname;
+      src = "http://" + pathname + ":3000/stream.mjpg";
+      console.log(src);
+      $("#stramingImg").attr("src", src);
+    }
+
+    function around() {
+      $.ajax({
+        url: "writeLCD/yes",
+        success: function (result) {
+          $("#lcdstatus").html(result);
+        }
+      })
+    }
+
+    function notAround() {
+      $.ajax({
+        url: "writeLCD/no",
+        success: function (result) {
+          $("#lcdstatus").html(result);
+        }
+      })
+    }
+
+    function getCurrentReadings() {
+      $.ajax({
+        url: "getCurrentLightValue",
+        success: function (result) {
+          // var readings = result.split(",");
+          // hum = readings[0];
+          // temp = readings[1];
+
+          // if (parseFloat(hum) < 30) {
+          //   $("#message").html("The humidity level is too low");
+          // }
+          // else if (parseFloat(hum) >= 30 && parseFloat(hum) <= 50) {
+          //   $("#message").html("The humidity level is alright");
+          // }
+          // else {
+          //   $("#message").html("The humidity level is too high");
+          // }
+
+          $("#current_temp").html(result + " °C");
+          $("#current_hum").html(hum + " %");
+        }
+      })
+    }
+
+    $(document).ready(function () {
+      getURL();
+
+      $("#b1").click(function () {
+        around();
+      });
+    
+      $("#b2").click(function () {
+        notAround();
+      });
+    });
+
+    setInterval(function () {
+      getNewData_loadChart()
+    }, 20000);
+
+    setInterval(function () {
+      getCurrentReadings()
+    }, 3000);
+  </script>
+</head>
+
+<body class="grey lighten-3">
+
+  <!--Main Navigation-->
+  <header>
+
+    <!-- Navbar -->
+    <nav class="navbar fixed-top navbar-expand-lg navbar-light white scrolling-navbar">
+      <div class="container-fluid">
+
+        <h3 style="color: #007bff"><b>Smart Monitoring Application</b></h3>
+      </div>
+
+      </div>
+    </nav>
+    <!-- Navbar -->
+
+  </header>
+  <!--Main Navigation-->
+
+  <!--Main layout-->
+  <main class="pt-5 mx-lg-5">
+    <div class="container-fluid mt-5">
+
+      <!--Grid row-->
+      <div class="row wow fadeIn">
+
+        <!--Grid column-->
+        <div class="col-lg-8 col-md-6 mb-4">
+
+          <!--Card-->
+          <div class="card">
+
+            <!-- Card header -->
+            <div class="card-header text-center">Real Time Streaming</div>
+
+            <!--Card content-->
+            <div class="card-body">
+
+              <center><img id="stramingImg" src="" width="75%"></center>
+
+            </div>
+
+          </div>
+          <!--/.Card-->
+
+        </div>
+        <!--Grid column-->
+
+        <!--Grid column-->
+        <div class="col-lg-4 col-md-6 mb-4">
+
+          <div class="card mb-4">
+
+            <!--Card content-->
+            <div class="card-body" style="text-align: center">
+              <p>Today's Date:</p>
+              <h4 style="color: #007bff" id="today_date"></h4>
+              <p>Current Temperature:</p>
+              <h4 style="color: #007bff" id="current_temp"></h4>
+              <p>Current Humidity:</p>
+              <h4 style="color: #007bff" id="current_hum"></h4>
+              <p style="color: #007bff" id="message"></p>
+
+            </div>
+
+          </div>
+
+          <!--Card-->
+          <div class="card mb-4">
+
+            <!-- Card header -->
+            <div class="card-header text-center">
+              Message For Visitors
+            </div>
+
+            <!--Card content-->
+            <div class="card-body" style="text-align: center">
+
+              <p>Are you around?</p>
+              <button id="b1" class="btn btn-success">Yes</button>
+              <button id="b2" class="btn btn-danger">No</button>
+              <br><br>
+              <p>Message currently displaying on lcd screen:</p>
+              <p style="color: #007bff" id="lcdstatus">Im around, press the door bell.</p>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+      <!--Grid row-->
+
+
+
+
+
+      <div class="card mb-4 wow fadeIn">
+
+        <!--Card content-->
+        <div class="card-body">
+          <span style="color: #007bff">Graph Status</span>
+          <span>:</span>
+          <span id="status">/Dashboard</span>
+        </div>
+
+      </div>
+
+
+
+
+
+
+      <div class="row wow fadeIn">
+        <div class="col-lg-7 col-md-6 mb-4">
+          <div class="card mb-4">
+
+            <!-- Card header -->
+            <div class="card-header text-center">
+              Temperature Readings For The Past 10 Minutes
+            </div>
+
+            <!--Card content-->
+            <div class="card-body">
+              <div id="temperature_div" style="width:100%"></div>
+            </div>
+
+          </div>
+          <!--/.Card-->
+          <div class="card mb-4">
+
+            <!-- Card header -->
+            <div class="card-header text-center">
+              Humidity Readings For The Past 10 Minutes
+            </div>
+
+            <!--Card content-->
+            <div class="card-body">
+              <div id="humidity_div" style="width:100%"></div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="col-lg-5 col-md-6 mb-4">
+          <div class="card">
+
+            <!-- Card header -->
+            <div class="card-header text-center">Data For The Past 10 Minutes</div>
+
+            <!--Card content-->
+            <div class="card-body">
+
+              <div id="table_div"></div>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+  <!--Main layout-->
+
+
+
+
+
+
+  <!--Footer-->
+  <footer class="page-footer text-center font-small primary-color-dark darken-2 mt-4 wow fadeIn">
+
+    <!--Copyright-->
+    <div class="footer-copyright py-3">
+      © 2019 Copyright:
+      <a href="https://mdbootstrap.com/education/bootstrap/" target="_blank"> Woo Yu Xuan </a>
+    </div>
+    <!--/.Copyright-->
+
+  </footer>
+
+</body>
+
+</html>
