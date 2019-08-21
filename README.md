@@ -90,3 +90,20 @@ Below is a list of which library is imported to ensure that it will work properl
 ## Section 6 Project Architecture
 ![Alt text](https://github.com/zhaoyan543/McSausage/blob/master/image/architecture.jpg)
 
+
+## Section 7 Web Interface
+
+
+## Section 8 How it should work
+1) When the student tapped their card, there will be a buzzer sounding off. 
+2) If the Red LED light up, it means that the student doesn't belong to the class. 
+3) However, if the student were to belong in the class the student were have to face the PiCam to allow the facial recognition to check    if it matches the correct student.
+4) If there is a student that had tapped in, the Yellow LED light that is not placed together with the other LED will light up to          represent classroom light being turn on.
+5) If there are two Yellow LED were to light up also, it means that student is late.
+
+
+## Section 9 Bonus Feature
+
+
+## Section 10 References
+
