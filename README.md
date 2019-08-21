@@ -25,23 +25,27 @@ This application is a smart classroom setup. With this application, more energy 
 ### How it should looks like?
 ![Alt text](https://github.com/zhaoyan543/McSausage/blob/master/image/looks.jpeg)
 
+
 ## Section 2 Hardware Requirements
+![Alt text](https://github.com/zhaoyan543/McSausage/blob/master/image/hardware.jpeg)
 
 ### Hardware Checklist?
 | Component |	Number of Items |
 | :------------------: | :---------: |
-NFC Card Reader |	1 |
-NFC Card |	Minimum 1 |
-Buzzer |	1 |
-LDR |	1 |
-Resistor |	5 |
-LED |	4 |
-Light Sensor |	1 |
-Wire |	At least 33 |
+| NFC Card Reader |	1 |
+| NFC Card |	Minimum 1 |
+| Buzzer |	1 |
+| Resistor |	5 |
+| LED |	4 |
+| Light Sensor w/MCP3008 ADC |	1 |
+| PiCamera |  1 |
+| Wire |	At least 33 |
 
 	
-
 ## Section 3 Hardware Setup
+| Classroom 1 to 3 RPi |
+| :----: |
+| <p>LCD Screen<br>Light Sensor w/MCP3008 ADC<br>RPi PiCamera<br>Buzzer<br>RFID Card Reader<br>RFID Card<br>Green LED<br>Yellow LED x2<br>Red LED<br>Wire x35<br>Buzzer<br>Resistor x5<br></p> |
 
 
 ## Section 4 Software Requirements
