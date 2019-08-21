@@ -16,8 +16,26 @@
 - Section 9 Bonus Feature
 - Section 10 References
 
+
 ## Section 1 Introduction
 
 ### What is McSausage about?
 
 ### How it should looks like?
+
+
+## Section 2 Hardware Requirements
+
+
+## Section 3 Hardware Setup
+
+
+## Section 4 Software Requirements
+
+
+## Section 5 Software Setup Requirements
+
+
+## Section 6 Project Architecture
+
+
