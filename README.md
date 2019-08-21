@@ -117,12 +117,17 @@ sudo python setup.py install
 
 
 ## Section 6 Project Architecture
-![Alt text](https://github.com/zhaoyan543/McSausage/blob/master/image/architecture.jpg)
+![Alt text](https://github.com/zhaoyan543/McSausage/blob/master/image/projectarchitecture.jpg)
 
 
 ## Section 7 Web Interface
 ### Login Page
 ![Alt text](https://github.com/zhaoyan543/McSausage/blob/master/image/login%20page.jpg)
+
+In order for the audience to login to the app to view the classes. You will need the username and password that we created by default. Therefore, please enter the following to enter the web application.
+ - Username: pi
+ - Password: robots1234
+
 ### Main Page (Classroom 1 to 3)
 ![Alt text](https://github.com/zhaoyan543/McSausage/blob/master/image/main%20page.jpg)
 
