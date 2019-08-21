@@ -44,9 +44,18 @@ This application is a smart classroom setup. With this application, more energy 
 	
 ## Section 3 Hardware Setup
 Please do ensure that all the items is present and setup properly.
-| Classroom 1 to 3 RPi |
-| :----: |
-| <p>LCD Screen<br>Light Sensor w/MCP3008 ADC<br>RPi PiCamera<br>Buzzer<br>RFID Card Reader<br>RFID Card<br>Green LED<br>Yellow LED x2<br>Red LED<br>Wire x35<br>Buzzer<br>Resistor x5<br></p> |
+<table>
+	<thead>
+		<tr>
+			<th> Classroom 1 to 3 </th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>LCD Screen<br>Light Sensor w/MCP3008 ADC<br>RPi PiCamera<br>Buzzer<br>RFID Card Reader<br>RFID Card<br>Green LED<br>Yellow LED x2<br>Red LED<br>Wire x35<br>Buzzer<br>Resistor x5</td>
+		</tr>
+	</tbody>
+	</table>
 
 
 ## Section 4 Software Requirements
@@ -79,5 +88,5 @@ Below is a list of which library is imported to ensure that it will work properl
 
 
 ## Section 6 Project Architecture
-
+![Alt text](https://github.com/zhaoyan543/McSausage/blob/master/image/architecture.jpg)
 
