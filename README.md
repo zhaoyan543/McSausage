@@ -136,7 +136,14 @@ sudo python setup.py install
 
 
 ## Section 9 Bonus Feature
-
+ - Telegram Bot that allows users to on and off lights remotely
+ - Blynk moblie application that allows users to on and off light remotely
+ - Twilio SMS to alert users who entered/left the classroom
+ - AWS SNS Notification(Email) to alert who entered and left the classroom
+ - Login Page
+ - AWS Facial Recognition
+ - Video live stream to show who's in each of the classroom
+ 
 
 ## Section 10 References
 
