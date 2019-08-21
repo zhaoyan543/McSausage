@@ -168,6 +168,8 @@ In order for the audience to login to the app to view the classes. You will need
 ### Main Page (Classroom 1 to 3)
 ![Alt text](https://github.com/zhaoyan543/McSausage/blob/master/image/main%20page.jpg)
 
+There will not be image of other classes as the interface is exactly the same as Classroom 1.
+
 
 ## Section 8 How it should work
 1) When the student tapped their card, there will be a buzzer sounding off. 
@@ -188,4 +190,9 @@ In order for the audience to login to the app to view the classes. You will need
  
 
 ## Section 10 References
+
+All IOT Practicals
+
+Rita Łyczywek. [2018]. How to write a good README for your GitHub project?. [ONLINE] Available at:
+https://bulldogjob.com/news/449-how-to-write-a-good-readme-for-your-github-project [Accessed 21 Aug 2019]
 
