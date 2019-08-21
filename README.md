@@ -85,6 +85,35 @@ Below is a list of which library is imported to ensure that it will work properl
 </table>
 
 ## Section 5 Software Setup Requirements
+First, to deploy the web application, the Flask library is needed to installed. The command is
+```
+sudo pip install flask
+```
+Next, since we are using PiCam. We will need to enable the camera inside raspberry pi configuration. Below are the steps to enable the camera:
+ - Go to Menu
+ - Preferences
+ - Raspberry Pi Configuration
+ - Ensure the Camera under the interface tab is enable
+ - Lastly, reboot it
+ 
+Next, to implement the LCD screen, rpi_lcd library need to be installed. The command to installed is:
+```
+sudo pip install rpi-lcd
+```
+
+Next, to implement NFC Card Reader and LDR to work. You will first need to ensure SPI under Raspberry Pi Configuration. In which you can follow the step from the PiCam. Which is enabled under the same place. Afterwards, you will need to install a few libraries. Which are:
+
+<< Install Python-dev >>
+```
+sudo apt-get install python-dev
+```
+<< Install SPI-Py Library >>
+```
+git clone https://github.com/lthiery/SPI-Py.git
+cd ~/SPI-Py
+sudo python setup.py install 
+```
+
 
 
 ## Section 6 Project Architecture
@@ -92,6 +121,9 @@ Below is a list of which library is imported to ensure that it will work properl
 
 
 ## Section 7 Web Interface
+### Login Page
+
+### Main Page (Classroom 1 to 3)
 
 
 ## Section 8 How it should work
@@ -99,7 +131,7 @@ Below is a list of which library is imported to ensure that it will work properl
 2) If the Red LED light up, it means that the student doesn't belong to the class. 
 3) However, if the student were to belong in the class the student were have to face the PiCam to allow the facial recognition to check    if it matches the correct student.
 4) If there is a student that had tapped in, the Yellow LED light that is not placed together with the other LED will light up to          represent classroom light being turn on.
-5) If there are two Yellow LED were to light up also, it means that student is late.
+5) If the Yellow LED among the three LED were to light up, it means that student is late. Red LED represent absent as the student tapped    in later than the class end time. Green LED represent early for class.
 
 
 ## Section 9 Bonus Feature
