@@ -122,8 +122,9 @@ sudo python setup.py install
 
 ## Section 7 Web Interface
 ### Login Page
-
+![Alt text](https://github.com/zhaoyan543/McSausage/blob/master/image/login%20page.jpg)
 ### Main Page (Classroom 1 to 3)
+![Alt text](https://github.com/zhaoyan543/McSausage/blob/master/image/main%20page.jpg)
 
 
 ## Section 8 How it should work
