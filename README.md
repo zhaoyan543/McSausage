@@ -101,8 +101,12 @@ Next, to implement the LCD screen, rpi_lcd library need to be installed. The com
 sudo pip install rpi-lcd
 ```
 
-Next, to implement NFC Card Reader and LDR to work. You will first need to ensure SPI under Raspberry Pi Configuration. In which you can follow the step from the PiCam. Which is enabled under the same place. Afterwards, you will need to install a few libraries. Which are:
+Next, to implement NFC Card Reader, LCD, LDR and other basic functions to work. You will first need to ensure SPI under Raspberry Pi Configuration. In which you can follow the step from the PiCam. Which is enabled under the same place. Afterwards, you will need to install a few libraries. Which are:
 
+<< Install RPI LCD >>
+```
+sudo apt-get install rpi-lcd
+```
 << Install Python-dev >>
 ```
 sudo apt-get install python-dev
