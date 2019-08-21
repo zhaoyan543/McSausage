@@ -113,7 +113,40 @@ git clone https://github.com/lthiery/SPI-Py.git
 cd ~/SPI-Py
 sudo python setup.py install 
 ```
+<< Install MFRC522 Python Library >>
+```
+git clone https://github.com/pimylifeup/MFRC522-python.git
+cd to the main folder and enter the follow to paste the clone files
+sudo cp `/MFRC522-python/mfrc522/*.py~/(type in the main folder name)'
+```
+<< Install AWS Client >>
+```
+sudo pip install awscli
+```
+<< Install Botocore >>
+```
+sudo pip install botocore
+```
+<< Install Boto3 >>
+```
+sudo pip install boto3 -upgrade
+```
 
+Lastly, is the additional features software requirement. Which are Twilio(To send SMS to users), Blynk (Control sensors with mobile phone) and Telegram Bot(Control sensors through Telegram). The commands are:
+
+<< Twilio >> After signing up an account
+```
+sudo pip install twilio
+```
+<< Blynk >> Download and sign up an account
+```
+Save the auth token
+sudo pip install blynkapi --upgrade
+```
+<< Telegram Bot >>
+```
+sudo pip install telebot
+```
 
 
 ## Section 6 Project Architecture
